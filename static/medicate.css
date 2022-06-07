@@ -27,21 +27,6 @@ input {
     border-radius: 5px;
 }
 
-#response {
-    background-color: white;
-    color: grey;
-    display: flex;
-    flex-direction: column;
-}
-
-.status {
-    color: #12CDD4;
-}
-
-h6 {
-    color: gainsboro;
-}
-
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -61,7 +46,31 @@ h6 {
   margin: auto;
   padding: 40px;
   border: 1px solid #888;
-  width: 80%;
+  width: 40%;
+}
+
+.textbtn {
+    font-family: PT Serif, sans-serif;
+}
+
+#modal_error {
+    display: none;
+    color: indianred;
+}
+
+#response {
+    background-color: white;
+    color: grey;
+    display: flex;
+    flex-direction: column;
+}
+
+.status {
+    color: #12CDD4;
+}
+
+h6 {
+    color: gainsboro;
 }
 
 .close {

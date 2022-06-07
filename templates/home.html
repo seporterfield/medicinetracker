@@ -28,7 +28,7 @@
         <img id="logo" width="10%" src="{{url_for('static', filename='basiclogo.png')}}" alt="pill with question mark">
         <h3>Forgot if you took your medication today? Track and check your status here.</h3>
         
-        
+        <!--Load this after positive response from server-->
         <script>
             function loadResp() {
                 var xhttp = new XMLHttpRequest();
@@ -40,10 +40,42 @@
                 };
                 xhttp.open("GET", "{{url_for('popup')}}", true);
                 xhttp.send();
-            }
+            } 
         </script>
-        <input type="button" name="req_popup" onclick="loadResp()" value="Click Here to Begin">
+        
+        <input type="button" name="req_popup" id="myBtn" value="Click Here to Begin">
     </div>
+    
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Did you take your medication today?</p>
+            <button id="yesBtn" class="textbtn">Yes!</button>
+            <button id="noBtn" class="textbtn" >No, but I'll come back to hit "Yes!" when I do.</button>
+            
+            <!-- Add error logic -->
+            <p id="modal_error">Something went wrong.</p>
+        </div>
+    </div>
+    
+    <script>
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+        
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
     
     <div id="response">
     </div>

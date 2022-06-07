@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Page Title</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='medicate.css') }}">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/static/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/static/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div id="header">
+        <h1>Did I Medicate?</h1>
+        <img id="logo" width="10%" src="{{url_for('static', filename='basiclogo.png')}}" alt="pill with question mark">
+        <h3>Forgot if you took your medication today? Track and check your status here.</h3>
+        
+        
+        <script>
+            function loadResp() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("response").innerHTML =
+                            this.responseText;
+                    }
+                };
+                xhttp.open("GET", "{{url_for('popup')}}", true);
+                xhttp.send();
+            }
+        </script>
+        <input type="button" name="req_popup" onclick="loadResp()" value="Click Here to Begin">
+    </div>
+    
+    <div id="response">
+    </div>
+    
+    <footer>
+        <h6>Created by Ki Wooten and Siegfried Porterfield.</h6>
+    </footer>
+    
+    
+</body>    
+
+</html>

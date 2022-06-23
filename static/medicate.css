@@ -7,12 +7,29 @@ body {
     font-family: PT Serif, serif;
 }
 
+#container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 50%;
+    justify-content: center;
+}
+
 #header {
     background: #B7F0F2;   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+#uid-box {
+    border: solid;
+    border-radius: 6px;
+    margin: 20%;
+    padding: 4px;
+    height: 40%;
+    width: 90%;
 }
 
 #header > h1 {

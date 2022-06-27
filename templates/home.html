@@ -50,11 +50,44 @@
     </div>
     
     <script>
+        var medsTaken = null;
+        var user = null;
+        if (localStorage.getItem('user') === null) { /* check if user exists*/
+            user = false;
+            medsTaken = false;
+        } else {
+            var currentDate = new Date();
+            medDate = Date.parse(window.localStorage.getItem('dateTaken'));
+            timeDiff = new Date(currentDate - medDate);
+            console.log(timeDiff.getHours());
+        
+            if (timeDiff.getHours < 24 && timeDiff.getDay < 1) {
+                document.getElementById("myBtn").style.display = "none";
+                loadCongrats();
+            } else {
+                localStorage.setItem('medsTaken', 'False');
+                document.write("Thanks for coming back! Time to take your meds.") /*placeholder*/
+            }
+        }
+        
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
         var noBtn = document.getElementById("noBtn");
         var yesBtn = document.getElementById("yesBtn");
+        
+        function loadCongrats() {
+            var xhttp = new XMLHttpRequest(); /*ajax loaded after recording medicine*/
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("response").innerHTML =
+                        this.responseText;
+                }
+            };
+            xhttp.open("GET", "{{url_for('popup')}}", true);
+            xhttp.send();
+        }
+        
         btn.onclick = function() {
             modal.style.display = "block";
         }
@@ -74,19 +107,12 @@
         }
         
         yesBtn.onclick = function(event) {
-            d = new Date();
-            var time = d.getTime();
-            window.localStorage.setItem('timeTaken', String(time));
+            window.localStorage.setItem('user', 'True');
+            window.localStorage.setItem('medsTaken', 'True');
+            dateTaken = new Date();
+            window.localStorage.setItem('dateTaken', String(dateTaken));
             
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("response").innerHTML =
-                        this.responseText;
-                }
-            };
-            xhttp.open("GET", "{{url_for('popup')}}", true);
-            xhttp.send();
+            loadCongrats();
             
             modal.style.display = "none";
             btn.style.display = "none";

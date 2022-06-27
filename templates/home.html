@@ -74,6 +74,10 @@
         }
         
         yesBtn.onclick = function(event) {
+            d = new Date();
+            var time = d.getTime();
+            window.localStorage.setItem('timeTaken', String(time));
+            
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {

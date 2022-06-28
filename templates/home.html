@@ -29,7 +29,7 @@
         <div id="container">
             <br>
             <h1>Did I Medicate?</h1>
-            <div id="uid-box"><ps>User info retrieved</p></div>
+            <div id="uid-box"><p>User info retrieved</p></div>
         </div>
         <img id="logo" width="10%" src="{{url_for('static', filename='basiclogo.png')}}" alt="pill with question mark">
         <h3>Forgot if you took your medication today? Track and check your status here.</h3>
@@ -57,11 +57,11 @@
             medsTaken = false;
         } else {
             var currentDate = new Date();
-            medDate = Date.parse(window.localStorage.getItem('dateTaken'));
-            timeDiff = new Date(currentDate - medDate);
-            console.log(timeDiff.getHours());
+            medDate = new Date(window.localStorage.getItem('dateTaken'));
+            secDiff = currentDate.getTime() - medDate.getTime();
+            hourDiff = secDiff/parseFloat(3600*1000); /* converting milliseconds to hours*/
         
-            if (timeDiff.getHours < 24 && timeDiff.getDay < 1) {
+            if (hourDiff < 24.0) {
                 document.getElementById("myBtn").style.display = "none";
                 loadCongrats();
             } else {

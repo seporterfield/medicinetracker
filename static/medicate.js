@@ -7,8 +7,10 @@ var noBtn = document.getElementById("noBtn");
 var yesBtn = document.getElementById("yesBtn");
 var popupLoc;
 
-function initFunc(loc) {
+function initFunc(loc, urlLink, newuserLink) {
     popupLoc = loc;
+    dateurl = urlLink;
+    newuser = newuserLink;
     main()
 }
 
@@ -25,11 +27,12 @@ function loadCongrats() {
 }
 
 function main() {
+    var currentDate = new Date();
+    
     if (localStorage.getItem('user') === null) { /* check if user exists*/
-    user = false;
-    medsTaken = false;
+        user = false;
+        medsTaken = false;
     } else {
-        var currentDate = new Date();
         medDate = new Date(window.localStorage.getItem('dateTaken'));
         millisecDiff = currentDate.getTime() - medDate.getTime();
         hourDiff = millisecDiff/parseFloat(3600*1000); /* converting milliseconds to hours*/
@@ -40,6 +43,16 @@ function main() {
         } else {
             localStorage.setItem('medsTaken', 'False');
             document.write("Thanks for coming back! Time to take your meds.") /*placeholder*/
+            
+            var uid = localStorage.getItem('uid');
+            var milliseconds = currentDate.getTime();
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", dateurl + "?uid=" + String(uid) + "&dateTaken=" + String(milliseconds), true);
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                }
+            };
+            xhttp.send();
         }
     }
 }
@@ -64,9 +77,17 @@ noBtn.onclick = function(event) {
 
 yesBtn.onclick = function(event) {
     window.localStorage.setItem('user', 'True');
-    window.localStorage.setItem('medsTaken', 'True');
-    dateTaken = new Date();
-    window.localStorage.setItem('dateTaken', String(dateTaken));
+    
+    milliseconds = (new Date()).getTime();
+    window.localStorage.setItem('dateTaken', String(milliseconds));
+    var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", newuser + "?date=" + String(milliseconds), true);
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    localStorage.setItem('uid', parseInt(this.responseText));
+                }
+            };
+            xhttp.send();
     
     loadCongrats();
     modal.style.display = "none";

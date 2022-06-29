@@ -38,6 +38,7 @@ function main() {
         hourDiff = millisecDiff/parseFloat(3600*1000); /* converting milliseconds to hours*/
         if (hourDiff < 24.0) {
             document.getElementById("myBtn").style.display = "none";
+            localStorage.setItem('medsTaken', 'True')
             loadCongrats();
         } else {
             localStorage.setItem('medsTaken', 'False');
@@ -75,7 +76,8 @@ noBtn.onclick = function(event) {
 }
 
 yesBtn.onclick = function(event) {
-    window.localStorage.setItem('user', 'True');
+    localStorage.setItem('user', 'True');
+    localStorage.setItem('medsTaken', 'True');
     
     milliseconds = (new Date()).getTime();
     window.localStorage.setItem('dateTaken', String(milliseconds));

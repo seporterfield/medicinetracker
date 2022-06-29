@@ -33,10 +33,9 @@ function main() {
         user = false;
         medsTaken = false;
     } else {
-        medDate = new Date(window.localStorage.getItem('dateTaken'));
+        medDate = new Date(parseInt(localStorage.getItem('dateTaken')));
         millisecDiff = currentDate.getTime() - medDate.getTime();
         hourDiff = millisecDiff/parseFloat(3600*1000); /* converting milliseconds to hours*/
-        
         if (hourDiff < 24.0) {
             document.getElementById("myBtn").style.display = "none";
             loadCongrats();
